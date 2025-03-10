@@ -29,7 +29,7 @@ function Home() {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen p-8 space-y-4">
       <button
         onClick={() => refetch()}
         disabled={isLoading}

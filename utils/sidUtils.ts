@@ -11,8 +11,8 @@ function generateRandomHex(length: number): string {
 }
 
 /**
- * Generates a SID in the format {prefix}{16 random hex characters}
+ * Generates a SID in the format {prefix}{32 random hex characters}
  */
 export function generateSid(prefix: string): string {
-  return `${prefix}${generateRandomHex(16)}`;
+  return `${prefix}${generateRandomHex(32)}`;
 }
