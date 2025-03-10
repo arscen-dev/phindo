@@ -1,6 +1,30 @@
+'use client';
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const fetchMessage = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setMessage(data.message);
+    } catch (error) {
+      console.error('Error fetching message:', error);
+      setMessage('Error fetching message');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -12,6 +36,23 @@ export default function Home() {
           height={38}
           priority
         />
+        
+        <div className="flex flex-col items-center gap-4">
+          <button 
+            onClick={fetchMessage}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            disabled={loading}
+          >
+            {loading ? 'Loading...' : 'Fetch Hello World'}
+          </button>
+          
+          {message && (
+            <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded">
+              <p className="font-[family-name:var(--font-geist-mono)]">{message}</p>
+            </div>
+          )}
+        </div>
+
         <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2">
             Get started by editing{" "}
