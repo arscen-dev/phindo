@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as userService from "@/services/userService";
+import { UserService } from "@/services/userService";
 import { UserDataInput, UserDeleteInput } from "@/types/user";
 
 /**
@@ -7,7 +7,7 @@ import { UserDataInput, UserDeleteInput } from "@/types/user";
  */
 export async function GET() {
   try {
-    const users = await userService.getAllUsers();
+    const users = await UserService.getAllUsers();
     return NextResponse.json(users, { status: 200 });
   } catch (error) {
     console.error("Error in GET /api/users:", error);
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       imageUrl: body.imageUrl,
     };
 
-    const newUser = await userService.createUser(userData);
+    const newUser = await UserService.createUser(userData);
     return NextResponse.json(newUser, { status: 201 });
   } catch (error) {
     console.error("Error in POST /api/users:", error);
@@ -63,7 +63,7 @@ export async function PUT(request: NextRequest) {
       imageUrl: body.imageUrl,
     };
 
-    const updatedUser = await userService.updateUser(body.sid, userData);
+    const updatedUser = await UserService.updateUser(body.sid, userData);
     return NextResponse.json(updatedUser, { status: 200 });
   } catch (error) {
     console.error("Error in PUT /api/users:", error);
@@ -90,7 +90,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     const deleteData: UserDeleteInput = { sid };
-    const deletedUser = await userService.deleteUser(deleteData);
+    const deletedUser = await UserService.deleteUser(deleteData);
     return NextResponse.json(deletedUser, { status: 200 });
   } catch (error) {
     console.error("Error in DELETE /api/users:", error);

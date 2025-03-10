@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Message } from "@/types/test";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -39,7 +40,7 @@ function Home() {
       
       {data?.message && (
         <div className="mt-8 p-4 bg-gray-100 rounded-md">
-          <p className="text-xl">{data.message}</p>
+          <p className="text-xl text-black">{data.message}</p>
           {data.status && <p className="text-sm text-gray-500 mt-2">Status: {data.status}</p>}
         </div>
       )}
@@ -49,6 +50,7 @@ function Home() {
           <p>Error fetching message</p>
         </div>
       )}
+      <GoogleSignInButton />
     </div>
   );
 }
