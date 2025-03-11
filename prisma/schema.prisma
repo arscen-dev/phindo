@@ -11,10 +11,64 @@ datasource db {
 model User {
   @@map("users")
   sid String @id
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email String? @unique
-  name String?
-  phoneNumber String?
-  imageUrl String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  email String? @unique @map("email")
+  name String? @map("name")
+  phoneNumber String? @map("phone_number")
+  imageUrl String? @map("image_url")
+}
+
+model File {
+  @@map("files")
+  sid String @id @map("sid")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name String @map("name")
+  url String @map("url")
+}
+
+model FileToUser {
+  @@map("files_to_users")
+  @@id([fileSid, userSid])
+  fileSid String @map("file_sid")
+  userSid String @map("user_sid")
+}
+
+model Template {
+  @@map("templates")
+  sid String @id @map("sid")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name String @map("name")
+  description String? @map("description")
+  fileSid String @map("file_sid")
+}
+
+model TemplateToUser {
+  @@map("templates_to_users")
+  @@id([templateSid, userSid])
+  templateSid String @map("template_sid")
+  userSid String @map("user_sid")
+}
+
+model TemplateRole {
+  @@map("template_roles")
+  sid String @id @map("sid")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name String @map("name") @default("SENDER")
+  templateSid String @map("template_sid")
+}
+
+model TemplateField {
+  @@map("template_fields")
+  sid String @id @map("sid")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name String @map("name")
+  templateSid String @map("template_sid")
+  templateRoleSid String @map("template_role_sid")
+  required Boolean @map("required") @default(false)
+  placeholder String? @map("placeholder")
 }
